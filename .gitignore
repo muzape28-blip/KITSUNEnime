@@ -1,0 +1,31 @@
+# Root-level ignores for the KITSUNEnime monorepo.
+# The Android project keeps its own rules in dantotsu/.gitignore.
+
+# Gradle / build output
+.gradle/
+build/
+**/build/
+.kotlin/
+
+# Local configuration (SDK path, secrets)
+local.properties
+apikey.properties
+*.keystore
+*.jks
+
+# Logs & OS cruft
+*.log
+.DS_Store
+Thumbs.db
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+
+# Toolchain / cache scratch (never commit SDKs or JDKs)
+.cache/
+android-sdk/
+
+# Stray archives (do not commit source snapshots/zips)
+*.zip

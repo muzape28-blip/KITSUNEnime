@@ -4,7 +4,10 @@
 - **Upstream snapshot:** commit `70358c75985724ff3cc1dad3dff2b3241e35872c`
 - **Scope:** Dantotsu/An iyomi extension compatibility subsystem
 - **Status:** Preliminary source audit
-- **Runtime/build status:** Not yet verified
+- **Runtime/build status:** Gradle configuration and full dependency resolution verified
+  (AGP 9.4.0 / Kotlin 2.4.20 / Gradle 9.7.1, `compileSdk = 37` → `platforms;android-37.0`).
+  APK compilation is validated in CI (`assembleGoogleDebug`); on-device runtime behavior is still
+  pending (see "Not yet concluded").
 
 ## Findings
 

@@ -21,6 +21,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # needed so the version name can embed the git commit hash
 
       - name: Set up Java
         uses: actions/setup-java@v4
@@ -31,9 +33,18 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
+      # API 37 is only published as a minor-versioned package (platforms;android-37.0);
+      # "platforms;android-37" does not exist. compileSdk = 37 maps to android-37.0.
+      # GitHub runners do not ship this bleeding-edge platform yet, so install it explicitly.
+      - name: Install required Android SDK packages
+        run: |
+          SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          yes | "$SDKMANAGER" --licenses > /dev/null || true
+          "$SDKMANAGER" "platform-tools" "platforms;android-37.0" "build-tools;37.0.0"
+
       - name: Build Google debug APK
         working-directory: dantotsu
-        run: ./gradlew assembleGoogleDebug --no-daemon
+        run: ./gradlew assembleGoogleDebug --no-daemon --stacktrace
 
       - name: Upload debug APK
         uses: actions/upload-artifact@v4
