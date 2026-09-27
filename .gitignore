@@ -1,31 +1,46 @@
-# Root-level ignores for the KITSUNEnime monorepo.
-# The Android project keeps its own rules in dantotsu/.gitignore.
-
-# Gradle / build output
+# Gradle files
 .gradle/
 build/
-**/build/
+
+#kotlin
 .kotlin/
 
-# Local configuration (SDK path, secrets)
+# Local configuration file (sdk path, etc)
 local.properties
-apikey.properties
-*.keystore
-*.jks
 
-# Logs & OS cruft
+# Log/OS Files
 *.log
-.DS_Store
-Thumbs.db
 
-# IDEs
-.idea/
+# Secrets
+apikey.properties
+
+# Android Studio generated files and folders
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+output.json
+
+# IntelliJ
 *.iml
-.vscode/
+.idea/
 
-# Toolchain / cache scratch (never commit SDKs or JDKs)
+# Keystore files
+*.jks
+*.keystore
+
+# Android Profiling
+*.hprof
+
+#other
+scripts/
+
+#crowdin
+crowdin.yml
+
+#vscode
+.vscode
+# Do not commit source snapshots/archives or local toolchains
+*.zip
 .cache/
 android-sdk/
-
-# Stray archives (do not commit source snapshots/zips)
-*.zip

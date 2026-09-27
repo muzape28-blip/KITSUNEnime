@@ -43,13 +43,12 @@ jobs:
           "$SDKMANAGER" "platform-tools" "platforms;android-37.0" "build-tools;37.0.0"
 
       - name: Build Google debug APK
-        working-directory: dantotsu
         run: ./gradlew assembleGoogleDebug --no-daemon --stacktrace
 
       - name: Upload debug APK
         uses: actions/upload-artifact@v4
         with:
           name: kitsunenime-google-debug
-          path: dantotsu/app/build/outputs/apk/**/*.apk
+          path: app/build/outputs/apk/**/*.apk
           if-no-files-found: error
           retention-days: 14
