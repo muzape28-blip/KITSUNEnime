@@ -22,6 +22,7 @@ import ani.dantotsu.parsers.ExtensionRepoMetaHelper
 import ani.dantotsu.parsers.novel.NovelExtensionManager
 import ani.dantotsu.settings.saving.PrefManager
 import ani.dantotsu.settings.saving.PrefName
+import ani.dantotsu.security.ExtensionTrustPolicy
 import ani.dantotsu.util.customAlertDialog
 import com.xwray.groupie.GroupieAdapter
 import com.xwray.groupie.viewbinding.BindableItem
@@ -207,7 +208,16 @@ class AddRepositoryBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun isValidUrl(input: String): String? {
-        if (input.startsWith("http://") || input.startsWith("https://")) {
+        if (input.contains("://")) {
+            when (val validation = ExtensionTrustPolicy.validateRepositoryUrl(input)) {
+                is ExtensionTrustPolicy.Validation.Rejected -> return validation.reason
+                is ExtensionTrustPolicy.Validation.Accepted -> Unit
+            }
+        }
+        if (input.startsWith("http://")) {
+            return "Repository harus menggunakan HTTPS"
+        }
+        if (input.startsWith("https://")) {
             if (mediaType == MediaType.NOVEL) {
                 if (!input.removeSuffix("/").endsWith(".json")) {
                     return "URL must end with a .json file"
